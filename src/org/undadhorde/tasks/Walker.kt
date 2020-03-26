@@ -25,51 +25,41 @@ class Walker(): Task() {
     }
 
     fun walkToBank(): Boolean {
+        if (BANK_POS.contains(Players.getLocal())) {
+            switchState(BotState.BANKING)
+            return true
+        }
+        Movement.walkToRandomized(BANK_POS.center)
         return false
     }
 
     fun walkToCaveEntrance(): Boolean {
-
-        // Check if we're by the trapdoor
         if (CAVE_ENTRANCE.contains(Players.getLocal())) {
             SceneObjects.getNearest("Trapdoor").interact("Climb-down")
             switchState(BotState.WALKING_TO_FIGHT_SPOT)
             return true
         }
-
-        // Nah we're still not at target, keep walking
         Movement.walkToRandomized(CAVE_ENTRANCE.center)
         return false
     }
 
     fun walkToFightSpot(): Boolean {
-
-        // Check if we're by the fight spot
         if (FIGHT_POS.contains(Players.getLocal())) {
-//            SceneObjects.getNearest("Trapdoor").interact("Climb-down")
 //            switchState(BotState.FIGHTING)
             switchState(BotState.WALKING_TO_LADDER)
             return true
         }
-
-        // Nah we're still not at target, keep walking
         Movement.walkToRandomized(FIGHT_POS.center)
         return false
     }
 
     fun walkToLadder(): Boolean {
-
-        // Check if we're by the ladder
         if (LADDER_POS.contains(Players.getLocal())) {
             SceneObjects.getNearest("Ladder").interact("Climb-up")
             switchState(BotState.WALKING_TO_BANK)
             return true
         }
-
-        // Nah we're still not at target, keep walking
         Movement.walkToRandomized(LADDER_POS.center)
-        return false
-
         return false
     }
 

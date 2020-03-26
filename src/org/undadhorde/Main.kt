@@ -15,6 +15,7 @@ import org.rspeer.script.ScriptMeta
 import org.rspeer.script.task.Task
 import org.rspeer.script.task.TaskScript
 import org.rspeer.ui.Log
+import org.undadhorde.tasks.Banker
 import org.undadhorde.tasks.Walker
 import kotlin.random.Random
 
@@ -23,7 +24,7 @@ import kotlin.random.Random
 @ScriptMeta(developer = "undadhorde", name="Icyboi", desc="Runs and fights:)")
 public class Main() : TaskScript() {
 
-    val tasks = arrayOf<Task>(Walker())
+    val tasks = arrayOf<Task>(Walker(), Banker())
 
     override fun onStart() {
         submit(*tasks)
