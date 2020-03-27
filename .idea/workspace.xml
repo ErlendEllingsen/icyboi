@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="989873d8-0391-44a5-8f0e-6e7100f9ba30" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/icyboi/META-INF/icyboi.kotlin_module" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/icyboi/META-INF/icyboi.kotlin_module" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/org/undadhorde/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/undadhorde/Positions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/Positions.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/org/undadhorde/State.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/State.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/org/undadhorde/tasks/Banker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/tasks/Banker.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/undadhorde/tasks/Walker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/tasks/Walker.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/undadhorde/tasks/Fighter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/tasks/Fighter.kt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +70,7 @@
       <updated>1585176394955</updated>
       <workItem from="1585176397629" duration="1346000" />
       <workItem from="1585181277840" duration="1349000" />
-      <workItem from="1585230246459" duration="8267000" />
+      <workItem from="1585230246459" duration="9952000" />
     </task>
     <servers />
   </component>

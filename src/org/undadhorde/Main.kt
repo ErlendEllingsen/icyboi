@@ -16,15 +16,30 @@ import org.rspeer.script.task.Task
 import org.rspeer.script.task.TaskScript
 import org.rspeer.ui.Log
 import org.undadhorde.tasks.Banker
+import org.undadhorde.tasks.Fighter
 import org.undadhorde.tasks.Walker
 import kotlin.random.Random
 
+fun longWait(): Int {
+    return org.rspeer.runetek.api.commons.math.Random.nextInt(5000,8500)
+}
+
+fun shortWait(): Int {
+    return org.rspeer.runetek.api.commons.math.Random.nextInt(2000,4500)
+}
+
+fun shorterWait(): Int {
+    return org.rspeer.runetek.api.commons.math.Random.nextInt(1000,2500)
+}
 
 
 @ScriptMeta(developer = "undadhorde", name="Icyboi", desc="Runs and fights:)")
 public class Main() : TaskScript() {
 
-    val tasks = arrayOf<Task>(Walker(), Banker())
+    val tasks = arrayOf<Task>(Walker(), Banker(), Fighter())
+
+
+
 
     override fun onStart() {
         submit(*tasks)
