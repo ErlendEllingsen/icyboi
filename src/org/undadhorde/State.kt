@@ -1,5 +1,6 @@
 package org.undadhorde
 
+import org.rspeer.runetek.api.movement.Movement
 import org.rspeer.ui.Log
 import org.undadhorde.tasks.BankingState
 import org.undadhorde.tasks.currentBankingState
@@ -25,6 +26,9 @@ fun switchState(newState: BotState) {
         // Reset banking state
         currentBankingState = BankingState.INIT
     }
+//    else if (newState === BotState.WALKING_TO_LADDER) {
+//        Movement.toggleRun(true)
+//    }
 
     currentState = newState
 }

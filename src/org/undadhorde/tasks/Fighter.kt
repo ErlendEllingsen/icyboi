@@ -6,10 +6,16 @@ import org.rspeer.runetek.api.commons.math.Random
 import org.rspeer.runetek.api.component.tab.Inventory
 import org.rspeer.runetek.api.movement.Movement
 import org.rspeer.runetek.api.scene.Npcs
+import org.rspeer.runetek.api.scene.Pickables
 import org.rspeer.runetek.api.scene.Players
 import org.rspeer.script.task.Task
 import org.undadhorde.*
 import java.util.function.Predicate
+
+val interestingItems = listOf(
+    "Coins",
+    "Ranarr seed", "Snapdragon seed", "Torstol seed", "Snape grass seed",
+    "Blood rune", "Chaos rune", "Death rune", "Nature rune")
 
 class Fighter() : Task() {
     override fun validate(): Boolean {
@@ -38,13 +44,13 @@ class Fighter() : Task() {
         if (currentFight === null) currentFight = Npcs.getNearest(NOT_IN_COMBAT_TARGET)
 
         // Verify hp, eat or flight
-        if (Players.getLocal().healthPercent < Random.nextInt(30,40)) {
+        if (Players.getLocal().healthPercent < Random.nextInt(35, 45)) {
             if (!Inventory.contains("Shark")) {
                 switchState(BotState.WALKING_TO_LADDER)
                 return shorterWait()
             } else {
-                Inventory.getFirst {i -> i.name == "Shark"}.interact("Eat")
-                return shortWait()
+                Inventory.getFirst { i -> i.name == "Shark" }.interact("Eat")
+                return longWait()
             }
         }
 
@@ -52,6 +58,12 @@ class Fighter() : Task() {
         if (!Players.getLocal().isAnimating) {
             currentFight.interact("Attack")
             return shorterWait()
+        }
+
+        // pick up items of interest
+        val p = Pickables.getNearest { p -> interestingItems.contains(p.name) && p.isPositionInteractable }
+        if (p !== null && (Inventory.getFreeSlots() > 0 || (Inventory.contains(p.name) && p.isStackable))) {
+            p.interact("Take")
         }
 
         return shorterWait()
