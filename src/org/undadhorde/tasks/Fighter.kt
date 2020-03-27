@@ -55,7 +55,7 @@ class Fighter() : Task() {
         }
 
         // prepare attack
-        if (!Players.getLocal().isAnimating) {
+        if (!Players.getLocal().isAnimating && !Players.getLocal().isMoving) {
             currentFight.interact("Attack")
             return shorterWait()
         }
