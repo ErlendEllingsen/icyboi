@@ -17,6 +17,7 @@ import org.rspeer.script.task.TaskScript
 import org.rspeer.ui.Log
 import org.undadhorde.tasks.Banker
 import org.undadhorde.tasks.Fighter
+import org.undadhorde.tasks.Startup
 import org.undadhorde.tasks.Walker
 import kotlin.random.Random
 
@@ -36,10 +37,7 @@ fun shorterWait(): Int {
 @ScriptMeta(developer = "undadhorde", name="Icyboi", desc="Runs and fights:)")
 public class Main() : TaskScript() {
 
-    val tasks = arrayOf<Task>(Walker(), Banker(), Fighter())
-
-
-
+    val tasks = arrayOf<Task>(Startup(), Walker(), Banker(), Fighter())
 
     override fun onStart() {
         submit(*tasks)

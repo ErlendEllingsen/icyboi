@@ -25,7 +25,7 @@ class Banker(): Task() {
         if (!Bank.isOpen()) {
             Bank.open();
             currentBankingState = BankingState.DEPOSITING_ITEMS
-            return longWait()
+            return shortWait()
         }
 
         if (currentBankingState == BankingState.DEPOSITING_ITEMS) {

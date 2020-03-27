@@ -9,9 +9,15 @@ import org.rspeer.script.task.Task
 import org.rspeer.ui.Log
 import org.undadhorde.*
 
-//import org.undadhorde.BANK_AREA
+data class PhaseRes(val finished: Boolean, val longWait: Boolean)
+
 
 class Walker(): Task() {
+
+    private fun notFinished(): PhaseRes {
+        return PhaseRes(finished = false, longWait = false)
+    }
+
     override fun validate(): Boolean {
         if (!listOf(
                 BotState.WALKING_TO_BANK,
@@ -24,49 +30,45 @@ class Walker(): Task() {
         return true
     }
 
-    fun walkToBank(): Boolean {
+    fun walkToBank(): PhaseRes {
         if (BANK_POS.contains(Players.getLocal())) {
             switchState(BotState.BANKING)
-            return true
+            return PhaseRes(finished = true, longWait = false)
         }
         Movement.walkToRandomized(BANK_POS.center)
-        return false
+        return notFinished()
     }
 
-    fun walkToCaveEntrance(): Boolean {
+    fun walkToCaveEntrance(): PhaseRes {
         if (CAVE_ENTRANCE.contains(Players.getLocal())) {
             SceneObjects.getNearest("Trapdoor").interact("Climb-down")
             switchState(BotState.WALKING_TO_FIGHT_SPOT)
-            return true
+            return PhaseRes(finished = true, longWait = true)
         }
         Movement.walkToRandomized(CAVE_ENTRANCE.center)
-        return false
+        return notFinished()
     }
 
-    fun walkToFightSpot(): Boolean {
+    fun walkToFightSpot(): PhaseRes {
         if (FIGHT_POS.contains(Players.getLocal())) {
             switchState(BotState.FIGHTING)
-            return true
+            return PhaseRes(finished = true, longWait = false)
         }
         Movement.walkToRandomized(FIGHT_POS.center)
-        return false
+        return notFinished()
     }
 
-    fun walkToLadder(): Boolean {
+    fun walkToLadder(): PhaseRes {
         if (LADDER_POS.contains(Players.getLocal())) {
             SceneObjects.getNearest("Ladder").interact("Climb-up")
             switchState(BotState.WALKING_TO_BANK)
-            return true
+            return PhaseRes(finished = true, longWait = true)
         }
         Movement.walkToRandomized(LADDER_POS.center)
-        return false
+        return notFinished()
     }
 
     override fun execute(): Int {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-
-//        Log.fine("Hello boo")
-
             Log.fine(currentState.toString())
 
             val res = when (currentState) {
@@ -74,19 +76,9 @@ class Walker(): Task() {
                 BotState.WALKING_TO_CAVE_ENTRANCE -> walkToCaveEntrance()
                 BotState.WALKING_TO_FIGHT_SPOT -> walkToFightSpot()
                 BotState.WALKING_TO_LADDER -> walkToLadder()
-                else -> false
+                else -> notFinished()
             }
 
-        return if (res) Random.nextInt(5000,10000) else Random.nextInt(2500,5000)
-
-//        val plr = Players.getLocal()
-//        if (BANK_AREA.contains(plr)) {
-//            Movement.walkTo(CAVE_ENTRANCE.center)
-//        } else if (CAVE_ENTRANCE.contains(plr)) {
-//            Movem
-//        }
-
-//        Movement.walkTo(CAVE_ENTRANCE.center)
-
+        return if (res.longWait) Random.nextInt(5000,10000) else Random.nextInt(750,1500)
     }
 }

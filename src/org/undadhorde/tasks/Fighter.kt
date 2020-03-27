@@ -2,6 +2,7 @@ package org.undadhorde.tasks
 
 import org.rspeer.runetek.adapter.component.Item
 import org.rspeer.runetek.adapter.scene.Npc
+import org.rspeer.runetek.api.commons.math.Distance
 import org.rspeer.runetek.api.commons.math.Random
 import org.rspeer.runetek.api.component.tab.Inventory
 import org.rspeer.runetek.api.movement.Movement
@@ -9,6 +10,7 @@ import org.rspeer.runetek.api.scene.Npcs
 import org.rspeer.runetek.api.scene.Pickables
 import org.rspeer.runetek.api.scene.Players
 import org.rspeer.script.task.Task
+import org.rspeer.ui.Log
 import org.undadhorde.*
 import java.util.function.Predicate
 
@@ -61,8 +63,12 @@ class Fighter() : Task() {
         }
 
         // pick up items of interest
-        val p = Pickables.getNearest { p -> interestingItems.contains(p.name) && p.isPositionInteractable }
+        val p = Pickables.getNearest { p -> interestingItems.contains(p.name) && p.isPositionInteractable && Distance.between(
+            p, Players.getLocal()
+        ) < 10.0 }
         if (p !== null && (Inventory.getFreeSlots() > 0 || (Inventory.contains(p.name) && p.isStackable))) {
+            val dst = Distance.between(p.position, Players.getLocal().position)
+            Log.info("Dst: " + dst.toString())
             p.interact("Take")
         }
 

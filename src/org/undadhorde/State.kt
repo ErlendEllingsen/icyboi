@@ -17,10 +17,10 @@ enum class BotState {
     WALKING_TO_BANK,
 }
 
-var currentState = BotState.FIGHTING
+var currentState = BotState.INIT
 
 fun switchState(newState: BotState) {
-    Log.fine("STATE", "New state " + newState.toString())
+    Log.fine("STATE", "New states " + newState.toString())
 
     if (newState === BotState.BANKING) {
         // Reset banking state
