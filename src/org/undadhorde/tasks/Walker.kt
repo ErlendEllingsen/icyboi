@@ -45,8 +45,7 @@ class Walker(): Task() {
 
     fun walkToFightSpot(): Boolean {
         if (FIGHT_POS.contains(Players.getLocal())) {
-//            switchState(BotState.FIGHTING)
-            switchState(BotState.WALKING_TO_LADDER)
+            switchState(BotState.FIGHTING)
             return true
         }
         Movement.walkToRandomized(FIGHT_POS.center)

@@ -25,7 +25,7 @@ class Fighter() : Task() {
 
     val NOT_IN_COMBAT_TARGET = Predicate { t: Npc ->
         t.targetIndex == -1
-                && t.name == "Ice Giant"
+                && t.name == "Ice giant"
                 && t.healthPercent > 0
                 && t.getHealthBar() == null
                 && Movement.isInteractable(t.position)
@@ -38,13 +38,13 @@ class Fighter() : Task() {
         if (currentFight === null) currentFight = Npcs.getNearest(NOT_IN_COMBAT_TARGET)
 
         // Verify hp, eat or flight
-        if (Players.getLocal().healthPercent < Random.nextInt(20,30)) {
+        if (Players.getLocal().healthPercent < Random.nextInt(30,40)) {
             if (!Inventory.contains("Shark")) {
                 switchState(BotState.WALKING_TO_LADDER)
                 return shorterWait()
             } else {
                 Inventory.getFirst {i -> i.name == "Shark"}.interact("Eat")
-                return shorterWait()
+                return shortWait()
             }
         }
 

@@ -16,7 +16,7 @@ enum class BotState {
     WALKING_TO_BANK,
 }
 
-var currentState = BotState.WALKING_TO_CAVE_ENTRANCE
+var currentState = BotState.FIGHTING
 
 fun switchState(newState: BotState) {
     Log.fine("STATE", "New state " + newState.toString())
