@@ -3,6 +3,7 @@ package org.undadhorde.tasks
 import org.rspeer.runetek.api.commons.math.Random
 import org.rspeer.runetek.api.component.tab.Inventory
 import org.rspeer.runetek.api.movement.Movement
+import org.rspeer.runetek.api.movement.position.Area
 import org.rspeer.runetek.api.scene.Players
 import org.rspeer.runetek.api.scene.SceneObjects
 import org.rspeer.script.task.Task
@@ -11,8 +12,39 @@ import org.undadhorde.*
 
 data class PhaseRes(val finished: Boolean, val longWait: Boolean)
 
+class WalkPhase(
+    val state: BotState,
+    val nextState: BotState,
+    val target: Area,
+    val phaseResFinished: PhaseRes,
+    val phaseResOngoing: PhaseRes,
+    val executor: () -> Unit,
+    val validator: () -> Boolean
+) {
 
-class Walker(): Task() {
+    var atTarget = false
+
+    fun reset() {
+        atTarget = false
+    }
+
+    fun process(): PhaseRes {
+        if (!atTarget && target.contains(Players.getLocal())) atTarget = true
+        if (atTarget) {
+            if (validator()) {
+                reset()
+                switchState(nextState)
+            } else {
+                executor()
+            }
+            return phaseResFinished
+        }
+        Movement.walkToRandomized(target.center)
+        return phaseResOngoing
+    }
+}
+
+class Walker() : Task() {
 
     private fun notFinished(): PhaseRes {
         return PhaseRes(finished = false, longWait = false)
@@ -23,62 +55,92 @@ class Walker(): Task() {
                 BotState.WALKING_TO_BANK,
                 BotState.WALKING_TO_CAVE_ENTRANCE,
                 BotState.WALKING_TO_FIGHT_SPOT,
-                BotState.WALKING_TO_LADDER).contains(currentState)) {
+                BotState.WALKING_TO_LADDER
+            ).contains(currentState)
+        ) {
             return false
         }
 
         return true
     }
 
-    fun walkToBank(): PhaseRes {
-        if (BANK_POS.contains(Players.getLocal())) {
-            switchState(BotState.BANKING)
-            return PhaseRes(finished = true, longWait = false)
+    val walkToBank = WalkPhase(
+        state = BotState.WALKING_TO_BANK,
+        nextState = BotState.BANKING,
+        target = BANK_POS,
+        phaseResFinished = PhaseRes(
+            finished = true,
+            longWait = false
+        ),
+        phaseResOngoing = notFinished(),
+        executor = { },
+        validator = {
+            BANK_POS.contains(Players.getLocal())
         }
-        Movement.walkToRandomized(BANK_POS.center)
-        return notFinished()
-    }
+    )
 
-    fun walkToCaveEntrance(): PhaseRes {
-        if (CAVE_ENTRANCE.contains(Players.getLocal())) {
+    val walkToCaveEntrance = WalkPhase(
+        state = BotState.WALKING_TO_CAVE_ENTRANCE,
+        nextState = BotState.WALKING_TO_FIGHT_SPOT,
+        target = CAVE_ENTRANCE,
+        phaseResFinished = PhaseRes(
+            finished = true,
+            longWait = true
+        ),
+        phaseResOngoing = notFinished(),
+        executor = {
             SceneObjects.getNearest("Trapdoor").interact("Climb-down")
-            switchState(BotState.WALKING_TO_FIGHT_SPOT)
-            return PhaseRes(finished = true, longWait = true)
+        },
+        validator = {
+            LADDER_POS.contains(Players.getLocal())
         }
-        Movement.walkToRandomized(CAVE_ENTRANCE.center)
-        return notFinished()
-    }
+    )
 
-    fun walkToFightSpot(): PhaseRes {
-        if (FIGHT_POS.contains(Players.getLocal())) {
-            switchState(BotState.FIGHTING)
-            return PhaseRes(finished = true, longWait = false)
+    val walkToFightSpot = WalkPhase(
+        state = BotState.WALKING_TO_FIGHT_SPOT,
+        nextState = BotState.FIGHTING,
+        target = FIGHT_POS,
+        phaseResFinished = PhaseRes(
+            finished = true,
+            longWait = false
+        ),
+        phaseResOngoing = notFinished(),
+        executor = {},
+        validator = {
+            FIGHT_POS.contains(Players.getLocal())
         }
-        Movement.walkToRandomized(FIGHT_POS.center)
-        return notFinished()
-    }
+    )
 
-    fun walkToLadder(): PhaseRes {
-        if (LADDER_POS.contains(Players.getLocal())) {
+    val walkToLadder = WalkPhase(
+        state = BotState.WALKING_TO_LADDER,
+        nextState = BotState.WALKING_TO_BANK,
+        target = LADDER_POS,
+        phaseResFinished = PhaseRes(
+            finished = true,
+            longWait = true
+        ),
+        phaseResOngoing = notFinished(),
+        executor = {
             SceneObjects.getNearest("Ladder").interact("Climb-up")
-            switchState(BotState.WALKING_TO_BANK)
-            return PhaseRes(finished = true, longWait = true)
+        },
+        validator = {
+            CAVE_ENTRANCE.contains(Players.getLocal())
         }
-        Movement.walkToRandomized(LADDER_POS.center)
-        return notFinished()
-    }
+    )
 
     override fun execute(): Int {
-            Log.fine(currentState.toString())
+        Log.fine(currentState.toString())
 
-            val res = when (currentState) {
-                BotState.WALKING_TO_BANK -> walkToBank()
-                BotState.WALKING_TO_CAVE_ENTRANCE -> walkToCaveEntrance()
-                BotState.WALKING_TO_FIGHT_SPOT -> walkToFightSpot()
-                BotState.WALKING_TO_LADDER -> walkToLadder()
-                else -> notFinished()
-            }
 
-        return if (res.longWait) Random.nextInt(5000,10000) else Random.nextInt(750,1500)
+
+        val res = when (currentState) {
+            BotState.WALKING_TO_BANK -> walkToBank.process()
+            BotState.WALKING_TO_CAVE_ENTRANCE -> walkToCaveEntrance.process()
+            BotState.WALKING_TO_FIGHT_SPOT -> walkToFightSpot.process()
+            BotState.WALKING_TO_LADDER -> walkToLadder.process()
+            else -> notFinished()
+        }
+
+        return if (res.longWait) Random.nextInt(5000, 10000) else Random.nextInt(750, 1500)
     }
 }

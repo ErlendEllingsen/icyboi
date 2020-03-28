@@ -35,12 +35,13 @@ fun shorterWait(): Int {
 
 
 @ScriptMeta(developer = "undadhorde", name="Icyboi", desc="Runs and fights:)")
-public class Main() : TaskScript() {
+class Main : TaskScript() {
 
-    val tasks = arrayOf<Task>(Startup(), Walker(), Banker(), Fighter())
+    val tasks = arrayOf(Startup(), Walker(), Banker(), Fighter())
 
     override fun onStart() {
         submit(*tasks)
+        GUI().isVisible = true
     }
 
     override fun onStop() {
