@@ -3,6 +3,7 @@ package org.undadhorde.tasks
 import org.rspeer.runetek.api.commons.math.Distance
 import org.rspeer.runetek.api.commons.math.Random
 import org.rspeer.runetek.api.component.Bank
+import org.rspeer.runetek.api.component.tab.Inventory
 import org.rspeer.runetek.api.scene.Players
 import org.rspeer.script.task.Task
 import org.rspeer.ui.Log
@@ -21,6 +22,13 @@ class Startup(): Task() {
             return shortWait()
         }
 
+        // CHECK 1: RESUME FIGHT - Check if in fighting spot AND got food.
+        if (Inventory.getCount("Shark")>4 && FIGHT_POS.contains(Players.getLocal())) {
+            switchState(BotState.FIGHTING)
+            return shortWait()
+        }
+
+        // CHECK 2: Running pos
         // Check which position is closer, if closest to fight pos, assume we're in the dungeon
         val plr = Players.getLocal()
         val distFightPos = Distance.between(plr, FIGHT_POS.center)
