@@ -22,6 +22,10 @@ fun addSkill(skillEvent: SkillEvent) {
 }
 
 fun drawSkills(g2d: Graphics2D) {
+
+    g2d.color = Color.yellow
+    g2d.drawString("PRIVATE SCRIPT 'Icyboi' by Erlend/Undadhorde", 5, BOTTOM_Y - (skillList.size)*15)
+
     var i = -1
     for (experience in skillList) {
         i++
