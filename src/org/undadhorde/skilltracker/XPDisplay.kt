@@ -39,7 +39,7 @@ fun drawSkills(g2d: Graphics2D) {
         g2d.drawRect(x, y + 2, width, 15);
 
         g2d.setColor(Color.black);
-        val myFont = Font("Calibri", Font.PLAIN, 12);
+        val myFont = Font("Helvetica", Font.PLAIN, 12);
         g2d.setFont(myFont);
         val displayText = String.format(
             "%s (Lvl. %d - %d%%) | %.1f k gained | %.1f k rem. | %s",

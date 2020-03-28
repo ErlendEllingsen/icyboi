@@ -32,6 +32,8 @@ fun shorterWait(): Int {
 @ScriptMeta(developer = "undadhorde", name="Icyboi", desc="Runs and fights:)")
 class Main : TaskScript(), RenderListener, SkillListener {
 
+    val startupGUI = GUI()
+
     override fun notify(renderEvent: RenderEvent) {
         val g2d = renderEvent.getSource() as Graphics2D
         drawSkills(g2d)
@@ -45,10 +47,11 @@ class Main : TaskScript(), RenderListener, SkillListener {
 
     override fun onStart() {
         submit(*tasks)
-        GUI().isVisible = true
+        startupGUI.isVisible = true
     }
 
     override fun onStop() {
         super.onStop()
+        startupGUI.isVisible = false
     }
 }

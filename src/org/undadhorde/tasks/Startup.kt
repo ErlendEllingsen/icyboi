@@ -23,7 +23,7 @@ class Startup(): Task() {
         }
 
         // CHECK 1: RESUME FIGHT - Check if in fighting spot AND got food.
-        if (Inventory.getCount("Shark")>4 && FIGHT_POS.contains(Players.getLocal())) {
+        if (Inventory.getCount("Shark")>4 && Distance.between(FIGHT_POS.center, Players.getLocal()) < 15.0) {
             switchState(BotState.FIGHTING)
             return shortWait()
         }
