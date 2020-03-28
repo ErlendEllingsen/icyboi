@@ -2,6 +2,8 @@ package org.undadhorde.tasks
 
 import org.rspeer.runetek.api.commons.math.Random
 import org.rspeer.runetek.api.component.Bank
+import org.rspeer.runetek.api.component.tab.Inventory
+import org.rspeer.runetek.api.scene.Players
 import org.rspeer.script.task.Task
 import org.undadhorde.*
 
@@ -23,8 +25,8 @@ class Banker(): Task() {
     override fun execute(): Int {
 
         if (!Bank.isOpen()) {
-            Bank.open();
-            currentBankingState = BankingState.DEPOSITING_ITEMS
+            Bank.open()
+            currentBankingState = if (!Inventory.isEmpty()) BankingState.DEPOSITING_ITEMS else BankingState.WITHDRAWING_FOOD
             return shortWait()
         }
 

@@ -17,7 +17,7 @@ class GUI : JFrame() {
         panel.layout = BoxLayout(panel, BoxLayout.Y_AXIS)
 
 
-        val box = JComboBox<BotState>(BotState.values())
+        val box = JComboBox(BotState.values())
         panel.add(box)
 
         val changeBtn = JButton("Set state")
