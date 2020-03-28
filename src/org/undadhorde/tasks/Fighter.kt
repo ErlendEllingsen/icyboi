@@ -68,7 +68,6 @@ class Fighter() : Task() {
         ) < 10.0 }
         if (p !== null && (Inventory.getFreeSlots() > 0 || (Inventory.contains(p.name) && p.isStackable))) {
             val dst = Distance.between(p.position, Players.getLocal().position)
-            Log.info("Dst: " + dst.toString())
             p.interact("Take")
         }
 
