@@ -41,9 +41,7 @@ class WalkPhase(
             return phaseResFinished
         }
 
-        val dstTar = Distance.between(Movement.getDestination(), Players.getLocal())
-        // Only mark if needed (plus randomness for humanization)
-        if (dstTar < Random.nextInt(3, 15)) Movement.walkToRandomized(target.center)
+        Movement.walkToRandomized(target.center)
         return phaseResOngoing
     }
 }

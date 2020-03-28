@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="989873d8-0391-44a5-8f0e-6e7100f9ba30" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/org/undadhorde/Settings.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/undadhorde/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/icyboi/META-INF/icyboi.kotlin_module" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/icyboi/META-INF/icyboi.kotlin_module" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/undadhorde/GUI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/GUI.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/undadhorde/tasks/Banker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/tasks/Banker.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/org/undadhorde/tasks/Fighter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/tasks/Fighter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/undadhorde/tasks/Startup.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/tasks/Startup.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/org/undadhorde/tasks/Walker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/tasks/Walker.kt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

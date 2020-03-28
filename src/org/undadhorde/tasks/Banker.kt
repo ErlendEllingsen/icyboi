@@ -35,7 +35,8 @@ class Banker(): Task() {
             currentBankingState = BankingState.WITHDRAWING_FOOD
             return shortWait()
         } else if (currentBankingState == BankingState.WITHDRAWING_FOOD) {
-            Bank.withdraw("Shark", 28)
+            Bank.withdraw("" +
+                    activeFood.foodName, 28)
             currentBankingState = BankingState.DONE
             switchState(BotState.WALKING_TO_CAVE_ENTRANCE)
             return shortWait()

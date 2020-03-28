@@ -47,11 +47,11 @@ class Fighter() : Task() {
 
         // Verify hp, eat or flight
         if (Players.getLocal().healthPercent < Random.nextInt(35, 45)) {
-            if (!Inventory.contains("Shark")) {
+            if (!Inventory.contains(activeFood.foodName)) {
                 switchState(BotState.WALKING_TO_LADDER)
                 return shorterWait()
             } else {
-                Inventory.getFirst { i -> i.name == "Shark" }.interact("Eat")
+                Inventory.getFirst { i -> i.name == activeFood.foodName }.interact("Eat")
                 return longWait()
             }
         }
