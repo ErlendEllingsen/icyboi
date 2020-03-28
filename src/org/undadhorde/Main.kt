@@ -29,7 +29,7 @@ fun shorterWait(): Int {
 }
 
 
-@ScriptMeta(developer = "undadhorde", name="Icyboi", desc="Runs and fights:)")
+@ScriptMeta(developer = "undadhorde", name="Icyboi", desc="Runs and fights:)", version = 1.0)
 class Main : TaskScript(), RenderListener, SkillListener {
 
     val startupGUI = GUI()

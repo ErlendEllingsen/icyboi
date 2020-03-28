@@ -56,6 +56,15 @@ class Fighter() : Task() {
             }
         }
 
+        // Check if we're out of fight, and no possible targets are available.
+        if (currentFight === null && !FIGHT_POS.contains(Players.getLocal())) {
+            Movement.walkToRandomized(FIGHT_POS.center)
+            return shorterWait()
+        } else if (currentFight === null && FIGHT_POS.contains(Players.getLocal())) {
+            // We're at the fight pos, but no available targets
+            return longWait()
+        }
+
         // prepare attack
         if (!Players.getLocal().isAnimating && !Players.getLocal().isMoving) {
             currentFight.interact("Attack")

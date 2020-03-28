@@ -1,5 +1,6 @@
 package org.undadhorde.tasks
 
+import org.rspeer.runetek.api.commons.math.Distance
 import org.rspeer.runetek.api.commons.math.Random
 import org.rspeer.runetek.api.component.tab.Inventory
 import org.rspeer.runetek.api.movement.Movement
@@ -39,7 +40,10 @@ class WalkPhase(
             }
             return phaseResFinished
         }
-        Movement.walkToRandomized(target.center)
+
+        val dstTar = Distance.between(Movement.getDestination(), Players.getLocal())
+        // Only mark if needed (plus randomness for humanization)
+        if (dstTar < Random.nextInt(3, 15)) Movement.walkToRandomized(target.center)
         return phaseResOngoing
     }
 }
@@ -51,17 +55,12 @@ class Walker() : Task() {
     }
 
     override fun validate(): Boolean {
-        if (!listOf(
-                BotState.WALKING_TO_BANK,
-                BotState.WALKING_TO_CAVE_ENTRANCE,
-                BotState.WALKING_TO_FIGHT_SPOT,
-                BotState.WALKING_TO_LADDER
-            ).contains(currentState)
-        ) {
-            return false
-        }
-
-        return true
+        return listOf(
+            BotState.WALKING_TO_BANK,
+            BotState.WALKING_TO_CAVE_ENTRANCE,
+            BotState.WALKING_TO_FIGHT_SPOT,
+            BotState.WALKING_TO_LADDER
+        ).contains(currentState)
     }
 
     val walkToBank = WalkPhase(
@@ -130,9 +129,6 @@ class Walker() : Task() {
 
     override fun execute(): Int {
         Log.fine(currentState.toString())
-
-
-
         val res = when (currentState) {
             BotState.WALKING_TO_BANK -> walkToBank.process()
             BotState.WALKING_TO_CAVE_ENTRANCE -> walkToCaveEntrance.process()
@@ -140,7 +136,6 @@ class Walker() : Task() {
             BotState.WALKING_TO_LADDER -> walkToLadder.process()
             else -> notFinished()
         }
-
         return if (res.longWait) Random.nextInt(5000, 10000) else Random.nextInt(750, 1500)
     }
 }

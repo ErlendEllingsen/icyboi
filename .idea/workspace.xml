@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="989873d8-0391-44a5-8f0e-6e7100f9ba30" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/undadhorde/skilltracker/XPDisplay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/skilltracker/XPDisplay.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/undadhorde/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/undadhorde/tasks/Fighter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/tasks/Fighter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/undadhorde/tasks/Walker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/undadhorde/tasks/Walker.kt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
